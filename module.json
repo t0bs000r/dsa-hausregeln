@@ -1,0 +1,24 @@
+{
+  "name": "dsa-hausregeln",
+  "title": "DSA-Hausregeln",
+  "description": "Ein Modul für Foundry VTT, um Hausregeln für DSA-Würfelwürfe zu implementieren.",
+  "version": "1.0.0",
+  "author": "Dein Name",
+  "esmodules": ["scripts/dsa-hausregeln.js"],
+  "minimumCoreVersion": "10",
+  "compatibleCoreVersion": "12",
+  "languages": [
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    }
+  ],
+  "manifest": "https://dein-server.de/dsa-hausregeln/module.json",
+  "download": "https://dein-server.de/dsa-hausregeln.zip",
+  "relationships": {
+    "systems": [
+      "dsa-41"
+    ]
+  }
+}

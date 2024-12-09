@@ -4,34 +4,26 @@ Hooks.once('ready', () => {
     // });
 
 
-    Hooks.on('system.postRoll', (roll, options, success) => {
-        console.log(options);
-        switch (options.skillType) {
-            default:
-                const skillDeltas = [];
-                roll.dice.forEach((die, idx) => {
-                    skillDeltas.push(options.testAttributeData[idx].value - die.results[0].result);
-                });
+    Hooks.on('system.postRoll', (roll, options) => {
+        const skillDeltas = roll.dice.map((die, idx) =>
+            options.testAttributeData[idx].value - die.results[0].result
+        );
 
-                let total = roll.total;
-                if (
-                    roll.dice.filter((die) => die?.results[0].result === 20).length >= 2
-                ) {
-                    success = false
-                }
-                else if (
-                    roll.dice.filter((die) => die.results[0].result === 1).length >= 2
-                ) {
-                    success = true
-                    total = options.skillValue + Math.max(...skillDeltas);
-                }
-                else {
-                    total = options.skillValue + Math.min(...skillDeltas);
-                    success = total >= 0
-                }
-                roll._total = total;
-                break;
+        const criticalSuccess = roll.dice.filter(die => die?.results[0].result === 1).length >= 2;
+        const criticalFailure = roll.dice.filter(die => die?.results[0].result === 20).length >= 2;
+
+        let total = roll.total;
+
+        if (criticalFailure) {
+            total = -Math.min(...skillDeltas);
         }
+        else if (criticalSuccess) {
+            total = options.skillValue + Math.max(...skillDeltas);
+        }
+        else {
+            total = options.skillValue + Math.min(...skillDeltas);
+        }
+        roll._total = total;
 
     });
 

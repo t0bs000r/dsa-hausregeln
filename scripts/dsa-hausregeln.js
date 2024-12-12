@@ -1,31 +1,35 @@
 Hooks.once('ready', () => {
 
-    // Hooks.on('system.preRoll', (rollAble, options, rollMod, totalMod) => {
-    // });
+    if (game?.system?.id === 'dsa-41') {
+        const calculateLeftSkillPoints = (options, result) => {
 
+            const diceResults = result.roll.dice.map(die => die.results[0].result);
+            const skillDeltas = options.testAttributeData.map((attr, idx) => attr.value - diceResults[idx]);
 
-    Hooks.on('system.postRoll', (roll, options) => {
-        const skillDeltas = roll.dice.map((die, idx) =>
-            options.testAttributeData[idx].value - die.results[0].result
-        );
+            const criticalSuccess = diceResults.filter(res => res === 1).length >= 2;
+            const criticalFailure = diceResults.filter(res => res === 20).length >= 2;
+            let total;
 
-        const criticalSuccess = roll.dice.filter(die => die?.results[0].result === 1).length >= 2;
-        const criticalFailure = roll.dice.filter(die => die?.results[0].result === 20).length >= 2;
+            if (criticalFailure) {
+                total = -Math.min(...skillDeltas);
+            }
+            else if (criticalSuccess) {
+                total = options.skillValue + Math.max(...skillDeltas);
+            }
+            else {
+                total = options.skillValue + Math.min(...skillDeltas);
+            }
 
-        let total = roll.total;
+            // Update roll total
+            result.roll._total = total;
+            return result;
+        };
 
-        if (criticalFailure) {
-            total = -Math.min(...skillDeltas);
+        const skillRollAction = game?.ruleset?.actions?.get('rollSkill');
+        if (skillRollAction) {
+            skillRollAction.addPostHook(calculateLeftSkillPoints);
         }
-        else if (criticalSuccess) {
-            total = options.skillValue + Math.max(...skillDeltas);
-        }
-        else {
-            total = options.skillValue + Math.min(...skillDeltas);
-        }
-        roll._total = total;
 
-    });
-
-
+    }
 });
+

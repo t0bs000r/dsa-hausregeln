@@ -4,24 +4,30 @@ Hooks.once('ready', () => {
         const calculateLeftSkillPoints = (options, result) => {
 
             const diceResults = result.roll.dice.map(die => die.results[0].result);
-            const skillDeltas = options.testAttributeData.map((attr, idx) => attr.value - diceResults[idx]);
-
             const criticalSuccess = diceResults.filter(res => res === 1).length >= 2;
             const criticalFailure = diceResults.filter(res => res === 20).length >= 2;
-            let total;
+
+            let additionalPoints = 0;
+            const skillDeltas = options.testAttributeData.map((attr, idx) => attr.value - diceResults[idx]);
+            skillDeltas.forEach((skillDelta) => additionalPoints += skillDelta < 0 ? skillDelta : 0);
+            additionalPoints ||= Math.min(...skillDeltas);
+
+            let total = -(result.mod > 0 ? result.mod : 0);
+
+            console.log(additionalPoints, total);
 
             if (criticalFailure) {
-                total = -Math.min(...skillDeltas);
+                total += additionalPoints;
             }
             else if (criticalSuccess) {
-                total = options.skillValue + Math.max(...skillDeltas);
+                total += options.skillValue + Math.max(...skillDeltas);
             }
             else {
-                total = options.skillValue + Math.min(...skillDeltas);
+                total += options.skillValue + additionalPoints;
             }
 
-            // Update roll total
             result.roll._total = total;
+
             return result;
         };
 

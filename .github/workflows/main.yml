@@ -24,8 +24,8 @@ jobs:
           # Update the module.json with the new version
           jq --arg new_version "$new_version" '.version = $new_version' module.json > module.tmp && mv module.tmp module.json
 
-      - id: git-author
-        name: Configure git user from GitHub token
+      - name: Configure git user from GitHub token
+        id: git-author
         uses: MarcoIeni/git-config@v0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,8 +34,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Utilizing the GitHub token
         run: |
-          echo "${{ steps.git-author.outputs.email }}"
-          echo "${{ steps.git-author.outputs.name }}"
           git add module.json
           git commit -m "Increment version to $new_version"
           git tag "v$new_version"
@@ -63,6 +61,12 @@ jobs:
           release_name: "Release v$new_version"
           draft: false
           prerelease: false
+
+      - name: download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dsa-hausregeln.zip
+
       - name: Upload ZIP to Release
         uses: actions/upload-release-asset@v1
         env:

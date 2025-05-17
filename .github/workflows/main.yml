@@ -18,7 +18,7 @@ jobs:
           zip -r dsa-hausregeln.zip . \
             -x ".git/*" \
             -x ".gitignore" \
-            -x ".github/*"
+            -x ".github/*" \
             -x ".idea/*"
       shell: bash
 

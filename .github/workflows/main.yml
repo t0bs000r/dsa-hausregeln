@@ -28,7 +28,7 @@ jobs:
       - name: Download the artifact
         uses: actions/download-artifact@v2
         with:
-          name: dsa-hausregeln
+          name: dsa-hausregeln.zip
           path: .
 
       - name: Zip the artifact files

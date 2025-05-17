@@ -37,7 +37,7 @@ jobs:
       - name: Create a Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: dsa-hausregeln.zip
+          artifacts: ./dsa-hausregeln.zip
           allowUpdates: true
           makeLatest: true
           name: Latest release

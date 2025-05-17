@@ -31,8 +31,8 @@ jobs:
           name: dsa-hausregeln.zip
           path: .
 
-      - name: Zip the artifact files
-        run: zip -r dsa-hausregeln.zip artifact-content/*
+#      - name: Zip the artifact files
+#        run: zip -r dsa-hausregeln.zip artifact-content/*
 
       - name: Create a Release
         uses: ncipollo/release-action@v1

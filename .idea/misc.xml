@@ -4,7 +4,7 @@
     <option name="defaultAhkSdk" value="AutoHotkey v2.0.11" />
   </component>
   <component name="JsBuildToolPackageJson" sorting="DEFINITION_ORDER" />
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" project-jdk-name="Python 3.10" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

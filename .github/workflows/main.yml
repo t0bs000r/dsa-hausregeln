@@ -2,8 +2,8 @@ name: Create Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - master
 
 jobs:
   build:
@@ -12,11 +12,6 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-      
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
 
     - name: Create a ZIP file of the source code
       run: zip -r dsa-hausregeln.zip .

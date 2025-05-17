@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Zipping
       uses: montudor/action-zip@v1
@@ -19,7 +19,7 @@ jobs:
         args: zip -qq -r dsa-hausregeln.zip .
 
     - name: Upload the ZIP file as an artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: dsa-hausregeln.zip
         path: dsa-hausregeln.zip

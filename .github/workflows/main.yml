@@ -24,7 +24,7 @@ jobs:
           # Update the module.json with the new version
           jq --arg new_version "$new_version" '.version = $new_version' module.json > module.tmp && mv module.tmp module.json
           
-          echo "{tag}={v$new_version}" >> $GITHUB_OUTPUT
+          echo "tag=v$new_version" >> $GITHUB_OUTPUT
 
       - name: Configure git user from GitHub token
         id: git-author

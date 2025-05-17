@@ -52,17 +52,17 @@ jobs:
           name: dsa-hausregeln.zip
           path: build-artifact
 
-      - name: create release
-        uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: "${{steps.increment_version.outputs.tag}}"
-          release_name: "Release ${{steps.increment_version.outputs.tag}}"
-          draft: false
-          prerelease: false
-      - name: Upload Release Assets
+#      - name: create release
+#        uses: actions/create-release@v1
+#        id: create_release
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: "${{steps.increment_version.outputs.tag}}"
+#          release_name: "Release ${{steps.increment_version.outputs.tag}}"
+#          draft: false
+#          prerelease: false
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: '*.zip'

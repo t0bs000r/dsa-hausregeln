@@ -35,7 +35,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ needs.tag_version.outputs.tag }}
+          tag: ${{ github.ref_name }}
           draft: true
           artifacts: dsa-hausregeln.zip
 

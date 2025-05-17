@@ -10,23 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v4
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-    - name: Create ZIP file
-      run: |
-          zip -r dsa-hausregeln.zip . \
-            -x ".git/*" \
-            -x ".gitignore" \
-            -x ".github/*" \
-            -x ".idea/*"
-      shell: bash
+      - name: Prepare files for artifact
+        run: |
+          mkdir -pv build-artifact
+          rsync -av --progress ./ ./build-artifact --exclude .git --exclude .github --exclude .gitignore --exclude .idea --exclude *.iml
+        shell: bash
 
-    - name: Upload the ZIP file as an artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: artifact.zip
-        path: .
+      - name: Upload the files as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsa-hausregeln.zip
+          overwrite: true
+          path: build-artifact
 
 
 #    - name: Create Release

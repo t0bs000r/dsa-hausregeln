@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - 'v*'
 
 jobs:
   build:
@@ -27,6 +25,11 @@ jobs:
           name: dsa-hausregeln.zip
           overwrite: true
           path: build-artifact
+
+      - name: Tagging
+        uses: laputansoft/github-tag-action@v4.6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release

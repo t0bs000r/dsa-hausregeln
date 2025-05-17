@@ -24,10 +24,18 @@ jobs:
           # Update the module.json with the new version
           jq --arg new_version "$new_version" '.version = $new_version' module.json > module.tmp && mv module.tmp module.json
 
+      - id: git-author
+        name: Configure git user from GitHub token
+        uses: MarcoIeni/git-config@v0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Utilizing the GitHub token
         run: |
+          echo "${{ steps.git-author.outputs.email }}"
+          echo "${{ steps.git-author.outputs.name }}"
           git add module.json
           git commit -m "Increment version to $new_version"
           git tag "v$new_version"
@@ -51,8 +59,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $new_version
-          release_name: Release $new_version
+          tag_name: "v$new_version"
+          release_name: "Release v$new_version"
           draft: false
           prerelease: false
       - name: Upload ZIP to Release

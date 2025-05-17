@@ -26,18 +26,17 @@ jobs:
           overwrite: true
           path: build-artifact
 
-      - name: Tagging
-        uses: laputansoft/github-tag-action@v4.6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Tagging
+#        uses: laputansoft/github-tag-action@v4.6
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create release
-        uses: ncipollo/release-action@v1
+      - uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          draft: true
-          artifacts: dsa-hausregeln.zip
+          artifacts: "dsa-hausregeln.zip"
+          allowUpdates: true
+          makeLatest: true
+          name: Latest release
 
 
       #        env:

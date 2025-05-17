@@ -12,6 +12,26 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
+      - name: Increment version
+        id: increment_version
+        run: |
+          # Extract the current version
+          current_version=$(jq -r '.version' module.json)
+          
+          # Increment the version
+          new_version=$((current_version + 1))
+          
+          # Update the module.json with the new version
+          jq --arg new_version "$new_version" '.version = $new_version' module.json > module.tmp && mv module.tmp module.json
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Utilizing the GitHub token
+        run: |
+          git add module.json
+          git commit -m "Increment version to $new_version"
+          git tag "v$new_version"
+          git push
 
       - name: Prepare files for artifact
         run: |
@@ -25,20 +45,14 @@ jobs:
           name: dsa-hausregeln.zip
           path: build-artifact
 
-      #      - name: Download the artifact
-      #        uses: actions/download-artifact@v4
-      #        with:
-      #          name: dsa-hausregeln.zip
-      #          path: .
-
       - name: create release
         uses: actions/create-release@v1
         id: create_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: latest
-          release_name: Latest Release
+          tag_name: $new_version
+          release_name: Release $new_version
           draft: false
           prerelease: false
       - name: Upload ZIP to Release

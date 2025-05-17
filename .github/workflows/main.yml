@@ -19,6 +19,7 @@ jobs:
             -x ".git/*" \
             -x ".gitignore" \
             -x ".github/*"
+            -x ".idea/*"
       shell: bash
 
     - name: Upload the ZIP file as an artifact

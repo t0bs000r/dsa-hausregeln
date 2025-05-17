@@ -14,9 +14,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Zipping
-      uses: montudor/action-zip@v1
-      with:
-        args: zip -qq -r dsa-hausregeln.zip .
+      run: zip -r dsa-hausregeln.zip . -x .git -x .gitignore -x.github
 
     - name: Upload the ZIP file as an artifact
       uses: actions/upload-artifact@v4

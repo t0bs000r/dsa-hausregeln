@@ -13,8 +13,13 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Zipping
-      run: zip -r dsa-hausregeln.zip . -x ".git" -x ".gitignore" -x ".github"
+    - name: Create ZIP file
+      run: |
+          zip -r dsa-hausregeln.zip . \
+            -x ".git/*" \
+            -x ".gitignore" \
+            -x ".github/*"
+      shell: bash
 
     - name: Upload the ZIP file as an artifact
       uses: actions/upload-artifact@v4

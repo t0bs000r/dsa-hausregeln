@@ -34,7 +34,7 @@ jobs:
 
       - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Utilizing the GitHub token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git add module.json
           git commit -m "Increment version to $new_version"
@@ -47,12 +47,6 @@ jobs:
           cd .build-artifact
           zip -r ../dsa-hausregeln.zip ./*
         shell: bash
-
-      - name: Upload the files as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dsa-hausregeln.zip
-          path: .build-artifact
 
       - name: Release
         uses: softprops/action-gh-release@v2

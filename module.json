@@ -17,7 +17,7 @@
     }
   ],
   "manifest": "https://raw.githubusercontent.com/t0bs000r/dsa-hausregeln/refs/heads/master/module.json",
-  "download": "https://dein-server.de/dsa-hausregeln.zip",
+  "download": "https://github.com/t0bs000r/dsa-hausregeln/releases/download/v18/dsa-hausregeln.zip",
   "relationships": {
     "systems": [
       "dsa-41"

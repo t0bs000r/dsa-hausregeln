@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-      - name: Increment version
-        id: Update Version and DL link
+      - name: Update version and DL link
+        id: increment_version
         run: |
           # Extract the current version
           current_version=$(jq -r '.version' module.json)

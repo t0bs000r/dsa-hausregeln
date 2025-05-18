@@ -43,7 +43,7 @@ jobs:
       - name: bundle
         run: |
           mkdir -pv .build-artifact
-          rsync -av --progress ./ .build-artifact --exclude .git --exclude .github --exclude .gitignore --exclude .idea --exclude *.iml --exclude .build-artifact
+          rsync -av --progress ./ ./.build-artifact --exclude .git --exclude .github --exclude .gitignore --exclude .idea --exclude *.iml --exclude .build-artifact
           cd .build-artifact
           zip -r ../dsa-hausregeln.zip ./*
         shell: bash

@@ -59,7 +59,9 @@ jobs:
           path: .
 
       - name: ls
-        run: ls -alh .
+        run: |
+          echo $GITHUB_WORKSPACE
+          ls -alh $GITHUB_WORKSPACE
 
       - name: Release
         uses: softprops/action-gh-release@v2

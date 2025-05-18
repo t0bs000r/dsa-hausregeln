@@ -2,7 +2,7 @@
   "name": "dsa-hausregeln",
   "title": "DSA-Hausregeln",
   "description": "Ein Modul für Foundry VTT, um Hausregeln für DSA-Würfelwürfe zu implementieren.",
-  "version": "11",
+  "version": "12",
   "author": "t0bs000r",
   "esmodules": [
     "scripts/dsa-hausregeln.js"

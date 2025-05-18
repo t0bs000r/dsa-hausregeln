@@ -56,10 +56,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dsa-hausregeln.zip
-          path: build-artifact
+          path: .
 
       - name: ls
-        run: ls -alh build-artifact
+        run: ls -alh .
 
       - name: Release
         uses: softprops/action-gh-release@v2

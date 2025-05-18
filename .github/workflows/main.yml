@@ -56,12 +56,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dsa-hausregeln.zip
-          path: .
+          path: dl/artifact
 
       - name: ls
         run: |
-          echo $GITHUB_WORKSPACE
-          ls -alh $GITHUB_WORKSPACE
+          ls -alh dl/artifact
 
       - name: Release
         uses: softprops/action-gh-release@v2

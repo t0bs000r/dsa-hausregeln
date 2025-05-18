@@ -27,7 +27,7 @@
   "relationships": {
     "systems": [
       {
-        id: "dsa-41" 
+        "id": "dsa-41" 
       }
     ]
   }

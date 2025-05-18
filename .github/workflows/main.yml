@@ -40,37 +40,34 @@ jobs:
           git commit -m "Increment version to $new_version"
           git push
 
-      - name: Prepare files for artifact
+      - name: bundle
         run: |
           mkdir -pv build-artifact
           rsync -av --progress ./ ./build-artifact --exclude .git --exclude .github --exclude .gitignore --exclude .idea --exclude *.iml
+          cd ./build-artifact
+          zip -r ../dsa-hausregeln.zip ./*
         shell: bash
 
-      - name: Upload the files as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dsa-hausregeln.zip
-          path: build-artifact
+#      - name: Upload the files as an artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dsa-hausregeln.zip
+#          path: build-artifact
+#
+#      - name: download artifact
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: dsa-hausregeln.zip
+#          path: artifact/dl
 
-      - name: download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dsa-hausregeln.zip
-          path: artifact/dl
-
-      - name: zip
-        run: zip -r artifact/dsa-hausregeln.zip artifact/dl/*
+#      - name: zip
+#        run: zip -r artifact/dsa-hausregeln.zip artifact/dl/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 'artifact/dsa-hausregeln.zip'
+          files: 'dsa-hausregeln.zip'
           tag_name: "${{steps.increment_version.outputs.tag}}"
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: 'artifact/dsa-hausregeln.zip'
-
 
 #      - name: download artifact
 #        uses: actions/download-artifact@v4

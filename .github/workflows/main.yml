@@ -56,21 +56,20 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dsa-hausregeln.zip
-          path: dl/artifact
+          path: artifact/dl
 
-      - name: ls
-        run: |
-          ls -alh dl/artifact
+      - name: zip
+        run: zip -r artifact/dsa-hausregeln.zip artifact/dl/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: 'dsa-hausregeln.zip'
+          files: 'artifact/dsa-hausregeln.zip'
           tag_name: "${{steps.increment_version.outputs.tag}}"
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: 'dsa-hausregeln.zip'
+          path: 'artifact/dsa-hausregeln.zip'
 
 
 #      - name: download artifact
